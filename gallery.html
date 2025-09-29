@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Photo Galleries</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+  <div class="container">
+    <section class="author">
+      <img src="./author.jpg" alt="Author" class="author-photo">
+      <div class="author-text">
+        <h1>Al.S.Kaperski (AlKaspar) </h1>
+        <p>Мemories from visiting Earth</p>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/shay.kasperski" target="_blank" rel="noopener"><i class="ri-facebook-fill"></i></a>
+          <a href="https://wa.me/48514629452" target="_blank" rel="noopener"><i class="ri-whatsapp-fill"></i></a>
+          <a href="https://instagram.com/allka.ss/" target="_blank" rel="noopener"><i class="ri-instagram-fill"></i></a>
+          <a href="https://t.me/yourusername" target="_blank" rel="noopener"><i class="ri-telegram-fill"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="main-gallery" class="main-gallery"></section>
+
+    <div class="contact">
+      <h2>Связаться</h2>
+      <div class="social-icons">
+        <a href="https://facebook.com/shay.kasperski" target="_blank" rel="noopener"><i class="ri-facebook-fill"></i></a>
+        <a href="https://wa.me/48514629452" target="_blank" rel="noopener"><i class="ri-whatsapp-fill"></i></a>
+        <a href="https://instagram.com/allka.ss" target="_blank" rel="noopener"><i class="ri-instagram-fill"></i></a>
+        <a href="https://t.me/yourusername" target="_blank" rel="noopener"><i class="ri-telegram-fill"></i></a>
+      </div>
+    </div>
+
+    <footer>
+      © AlKaspar, 2025
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
+  <script>
+    let galleries = {};
+
+    fetch('./galleries/galleries.json')
+      .then(res => res.json())
+      .then(data => {
+        galleries = data;
+        buildMainGallery();
+      })
+      .catch(err => console.error("Ошибка загрузки JSON:", err));
+
+    function buildMainGallery() {
+      const main = document.getElementById("main-gallery");
+      main.innerHTML = "";
+
+      Object.keys(galleries).forEach(key => {
+        const gallery = galleries[key];
+        const cover = gallery.files[0];
+        const path = `./galleries/${gallery.path}${cover}`;
+
+        const card = document.createElement("div");
+        card.classList.add("gallery-card");
+
+        // Видимая ссылка (обложка + заголовок)
+        const coverLink = document.createElement("a");
+        coverLink.href = path;
+        coverLink.className = "glightbox";
+        coverLink.dataset.gallery = key;
+        // ИЗМЕНЕНИЕ: Динамический заголовок для первой фотографии (#1)
+        coverLink.dataset.title = `${gallery.title} #1`;
+
+        const img = document.createElement("img");
+        img.src = path;
+        img.alt = gallery.title;
+        img.loading = "lazy";
+        img.classList.add("gallery-cover");
+
+        const title = document.createElement("h2");
+        title.textContent = gallery.title;
+        title.classList.add("gallery-title");
+
+        coverLink.appendChild(img);
+        coverLink.appendChild(title);
+        card.appendChild(coverLink);
+
+        // Невидимые ссылки для остальных фото
+        for (let i = 1; i < gallery.files.length; i++) {
+          const p = `./galleries/${gallery.path}${gallery.files[i]}`;
+          const a = document.createElement("a");
+          a.href = p;
+          a.className = "glightbox";
+          a.dataset.gallery = key;
+          // ИЗМЕНЕНИЕ: Динамический заголовок для последующих фотографий (#i+1)
+          a.dataset.title = `${gallery.title} #${i + 1}`; 
+          // Используем перенесенный класс для скрытия
+          a.classList.add("glightbox-hidden");
+          card.appendChild(a);
+        }
+
+        main.appendChild(card);
+      });
+
+      GLightbox({
+        selector: ".glightbox",
+        loop: true,
+        openEffect: "fade",
+        closeEffect: "fade",
+        slideEffect: "fade"
+      });
+    }
+  </script>
+</body>
+</html>
