@@ -75,7 +75,7 @@
   },
   "HalfLight": {
     "title": "Half light",
-    "path": "Half light/",
+    "path": "HalfLight/",
     "files": [
       "20250514_163536_2_1200x1600_small.jpg",
       "20250526_204541_1200x1666_small.jpg",
@@ -128,6 +128,7 @@
     ]
   }
 }
+
 
 
 
