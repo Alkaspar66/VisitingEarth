@@ -4,30 +4,36 @@
   <meta charset="UTF-8">
   <title>Photo Galleries</title>
 
+  <!-- GLightbox -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
 
+  <!-- Remix Icons -->
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=3">
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
   <div class="container">
+    <!-- Автор -->
     <section class="author">
       <img src="./author.jpg" alt="Author" class="author-photo">
       <div class="author-text">
-        <h1>Alexander S. Kaperski (AlKaspar) </h1>
-        <p>Мemories from visiting planet Earth</p>
+        <h1>Alexander S. Kaperski (AlKaspar)</h1>
+        <p>Memories from visiting planet Earth</p>
         <div class="social-icons">
-          <a href="https://www.facebook.com/shay.kasperski" target="_blank" rel="noopener"><i class="ri-facebook-fill"></i></a>
+          <a href="https://facebook.com/shay.kasperski" target="_blank" rel="noopener"><i class="ri-facebook-fill"></i></a>
           <a href="https://wa.me/48514629452" target="_blank" rel="noopener"><i class="ri-whatsapp-fill"></i></a>
-          <a href="https://instagram.com/allka.ss/" target="_blank" rel="noopener"><i class="ri-instagram-fill"></i></a>
-          <a href="https://t.me/@alkaspar" target="_blank" rel="noopener"><i class="ri-telegram-fill"></i></a>
+          <a href="https://instagram.com/allka.ss" target="_blank" rel="noopener"><i class="ri-instagram-fill"></i></a>
+          <a href="https://t.me/alkaspar" target="_blank" rel="noopener"><i class="ri-telegram-fill"></i></a>
         </div>
       </div>
     </section>
 
+    <!-- Галереи -->
     <section id="main-gallery" class="main-gallery"></section>
 
+    <!-- Контакты -->
     <div class="contact">
       <h2>Связаться</h2>
       <div class="social-icons">
@@ -38,13 +44,13 @@
       </div>
     </div>
 
+    <!-- Футер -->
     <footer>
       © AlKaspar, 2025
     </footer>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
-
   <script>
     let galleries = {};
 
@@ -68,12 +74,10 @@
         const card = document.createElement("div");
         card.classList.add("gallery-card");
 
-        // Видимая ссылка (обложка + заголовок)
         const coverLink = document.createElement("a");
         coverLink.href = path;
         coverLink.className = "glightbox";
         coverLink.dataset.gallery = key;
-        // ИЗМЕНЕНИЕ: Динамический заголовок для первой фотографии (#1)
         coverLink.dataset.title = `${gallery.title} #1`;
 
         const img = document.createElement("img");
@@ -81,6 +85,7 @@
         img.alt = gallery.title;
         img.loading = "lazy";
         img.classList.add("gallery-cover");
+        img.onload = () => card.classList.add("loaded");
 
         const title = document.createElement("h2");
         title.textContent = gallery.title;
@@ -90,17 +95,14 @@
         coverLink.appendChild(title);
         card.appendChild(coverLink);
 
-        // Невидимые ссылки для остальных фото
+        // Остальные изображения (скрытые)
         for (let i = 1; i < gallery.files.length; i++) {
           const p = `./galleries/${gallery.path}${gallery.files[i]}`;
           const a = document.createElement("a");
           a.href = p;
-          a.className = "glightbox";
+          a.className = "glightbox glightbox-hidden";
           a.dataset.gallery = key;
-          // ИЗМЕНЕНИЕ: Динамический заголовок для последующих фотографий (#i+1)
-          a.dataset.title = `${gallery.title} #${i + 1}`; 
-          // Используем перенесенный класс для скрытия
-          a.classList.add("glightbox-hidden");
+          a.dataset.title = `${gallery.title} #${i + 1}`;
           card.appendChild(a);
         }
 
@@ -118,5 +120,3 @@
   </script>
 </body>
 </html>
-
-
