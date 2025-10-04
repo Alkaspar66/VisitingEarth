@@ -128,3 +128,20 @@ footer {
 .glightbox-hidden {
   display: none;
 }
+/* Убираем синие ссылки и подчёркивание в названиях галерей */
+.gallery-card a {
+  color: inherit;
+  text-decoration: none !important;
+}
+
+.gallery-card a:visited {
+  color: inherit;
+}
+
+.gallery-card a:hover,
+.gallery-card a:focus {
+  color: #fff;
+  text-decoration: none !important;
+}
+
+
