@@ -1,7 +1,7 @@
 {
   "BW": {
     "title": "B&W",
-    "path": "BW/",
+    "path": "B&W/",
     "files": [
       "20250601_135349_1200x1812_small.jpg",
       "20250603_195250_1200x795_small.jpg",
@@ -40,121 +40,41 @@
     "title": "Color",
     "path": "Color/",
     "files": [
-      "20240923_113612.jpg",
-      "20240923_115841.jpg",
-      "20240923_122704.jpg",
-      "20240923_123048.jpg",
-      "20241109_164142.jpg",
-      "20241109_164202.jpg",
-      "20241109_164800.jpg",
-      "20241109_164903.jpg",
-      "20241109_171153.jpg",
-      "20250514_112050_1200x1523_small.jpg",
-      "20250515_174032_1200x900_small.jpg",
-      "20250601_192736_1200x1642_small.jpg",
-      "20250610_235313_1200x1249_small.jpg",
-      "20250614_074510_1200x1506_small.jpg",
-      "20250614_075136_1200x900_small.jpg",
-      "20250615_073249_1200x1711_small.jpg",
-      "20250615_075623_1200x900_small.jpg",
-      "20250615_075651_1200x1073_small.jpg",
-      "20250615_075728_1200x1003_small.jpg",
-      "20250615_075928_1200x991_small.jpg",
-      "20250703_115212_1200x1462_small.jpg",
-      "20250703_124240_1200x1338_small.jpg",
-      "20250724_163202_1280x960_small.jpg",
-      "20250810_155858_1280x960_small.jpg",
-      "20250822_172203.jpg",
-      "20250827_172955.jpg",
-      "20250829_134716.jpg",
-      "20250831_170450.jpg",
-      "20250904_174604.jpg",
-      "20250906_131029.jpg",
-      "20250906_153707.jpg",
-      "20250907_123247.jpg",
-      "20250908_142901.jpg",
-      "20250908_152924.jpg",
-      "20250908_194339.jpg",
-      "20250925_155806.jpg",
-      "20250929_174439.jpg",
-      "CSC_1406_1200x795_small.jpg",
-      "CSC_9655_1200x1812_small.jpg",
-      "CSC_9656_1200x1812_small.jpg",
-      "DSC_0034_24_1280x1932_small.jpg",
-      "DSC_0090_1280x1827_small.jpg",
-      "DSC_0118_1280x848_small.jpg",
-      "DSC_0225.jpg",
-      "DSC_0239_1280x1933_small.jpg",
-      "DSC_0282_1280x848_small.jpg",
-      "DSC_0300_1280x1578_small.jpg",
-      "DSC_0463_1280x848_small.jpg",
-      "DSC_0472_1280x848_small.jpg",
-      "DSC_07514_1280x1280_small.jpg",
-      "DSC_0802_1280x848_small.jpg",
-      "DSC_0901_73_1280x1865_small.jpg",
-      "DSC_0981_1280x1933_small.jpg",
-      "DSC_0993_89_1280x1933_small.jpg",
-      "DSC_1002_90_1280x1074_small.jpg",
-      "DSC_1112_109_1036x1440_small.jpg",
-      "DSC_1156_1280x1933_small.jpg",
-      "DSC_1161_1280x1933_small.jpg",
-      "DSC_1163_1280x1933_small.jpg",
-      "DSC_1172_103_1280x1230_small.jpg",
-      "DSC_1284_1200x1490_small.jpg",
-      "DSC_1334_1200x795_small.jpg",
-      "DSC_1342_1200x795_small.jpg",
-      "DSC_1356_1200x1304_small.jpg",
-      "DSC_1468_1200x1455_small.jpg",
-      "DSC_15022_1200x1384_small.jpg",
-      "DSC_1525_141_1200x1483_small.jpg",
-      "DSC_5782_1200x1812_small.jpg",
-      "DSC_5806_1200x1812_small.jpg",
-      "DSC_5880_1200x1826_small.jpg",
-      "DSC_5981_1200x1350_small.jpg",
-      "DSC_6256_1200x795_small.jpg",
-      "DSC_6274_1200x1127_small.jpg",
-      "DSC_6545_1200x1859_small.jpg",
-      "DSC_6590 (1)_1200x1546_small.jpg",
-      "DSC_6625.jpg",
-      "DSC_6857_1200x1812_small.jpg",
-      "DSC_6896_1200x1812_small.jpg",
-      "DSC_6949_1200x795_small.jpg",
-      "DSC_7034 (1)_1200x1812_small.jpg",
-      "DSC_7040 (1)_1200x1958_small.jpg",
-      "DSC_7041_1200x1812_small.jpg",
-      "DSC_7108_1200x1812_small.jpg",
-      "DSC_7186_1_1200x1013_small.jpg",
-      "DSC_7261_1200x1011_small.jpg",
-      "DSC_7389_1200x1544_small.jpg",
-      "DSC_7470_1200x1812_small.jpg",
-      "DSC_7843_1200x1866_small.jpg",
-      "DSC_8029_1200x1321_small.jpg",
-      "DSC_8340_1200x1812_small.jpg",
-      "DSC_8476_1200x1680_small.jpg",
-      "DSC_8637_1200x1342_small.jpg",
-      "DSC_8839_1200x795_small.jpg",
-      "DSC_8951_1200x1812_small.jpg",
-      "DSC_9019_1200x1812_small.jpg",
-      "DSC_9027_1200x1812_small.jpg",
-      "DSC_9057_1200x1812_small.jpg",
-      "DSC_9169_1200x1812_small.jpg",
-      "DSC_9183_1200x1812_small.jpg",
-      "DSC_9263_1200x795_small.jpg",
-      "DSC_9572_1140x1980_small.jpg",
-      "DSC_9599_1200x1812_small.jpg",
-      "DSC_9606_1200x1812_small.jpg",
-      "DSC_9621_1200x1812_small.jpg",
-      "DSC_9893_19_1280x848_small.jpg",
-      "DSC_9896_16_1280x1933_small.jpg",
-      "DSC_9898_37_1280x1932_small.jpg",
-      "DSC_9927_44_1280x1932_small.jpg",
-      "DSC_9928_45_1280x1933_small.jpg",
-      "DSC_9958_51_1280x1600_small.jpg",
-      "DSC_9964_53_1280x1933_small.jpg",
-      "DSC_9985_55_1280x1933_small.jpg"
+      "DSC_07514_1280x1280_small.jpg"
+"DSC_0901_73_1280x1865_small.jpg"
+"DSC_0981_1280x1933_small.jpg"
+"DSC_1156_1280x1933_small.jpg"
+"DSC_1161_1280x1933_small.jpg"
+"DSC_15022_1200x1384_small.jpg"
+"DSC_5782_1200x1812_small.jpg"
+"DSC_5806_1200x1812_small.jpg"
+"DSC_5880_1200x1826_small.jpg"
+"DSC_5981_1200x1350_small.jpg"
+"DSC_6545_1200x1859_small.jpg"
+"DSC_6857_1200x1812_small.jpg"
+"DSC_6949_1200x795_small.jpg"
+"DSC_7040 (1)_1200x1958_small.jpg"
+"DSC_7108_1200x1812_small.jpg"
+"DSC_7261_1200x1011_small.jpg"
+"DSC_7389_1200x1544_small.jpg"
+"DSC_7470_1200x1812_small.jpg"
+"DSC_7843_1200x1866_small.jpg"
+"DSC_8340_1200x1812_small.jpg"
+"DSC_8637_1200x1342_small.jpg"
+"DSC_8951_1200x1812_small.jpg"
+"DSC_9019_1200x1812_small.jpg"
+"DSC_9183_1200x1812_small.jpg"
+"DSC_9263_1200x795_small.jpg"
+"DSC_9572_1140x1980_small.jpg"
+"DSC_9606_1200x1812_small.jpg"
+"DSC_9893_19_1280x848_small.jpg"
+"DSC_9896_16_1280x1933_small.jpg"
+"DSC_9898_37_1280x1932_small.jpg"
+"DSC_9927_44_1280x1932_small.jpg"
+"DSC_9964_53_1280x1933_small.jpg"
     ]
   },
-  "Half light": {
+  "HalfLight": {
     "title": "Half light",
     "path": "Half light/",
     "files": [
@@ -209,3 +129,4 @@
     ]
   }
 }
+
