@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visiting Earth</title>
+
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="./favicon.png?v=3">
+
+  <!-- Remix Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+
+  <!-- GLightbox -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css?v=9">
+</head>
+<body>
+  <div class="container">
+    <section class="author">
+      <img src="./author.jpg" alt="Author" class="author-photo">
+      <div class="author-text">
+        <h1>Alexander S. Kasperski AlKaspar</h1>
+        <p>Memories from visiting planet Earth</p>
+        <div class="social-icons">
+          <a href="https://facebook.com/shay.kasperski" target="_blank"><i class="ri-facebook-fill"></i></a>
+          <a href="https://wa.me/48514629452" target="_blank"><i class="ri-whatsapp-fill"></i></a>
+          <a href="https://instagram.com/allka.ss" target="_blank"><i class="ri-instagram-fill"></i></a>
+          <a href="https://t.me/alkaspar" target="_blank"><i class="ri-telegram-fill"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="main-gallery" class="main-gallery"></section>
+
+    <div class="contact">
+      <h2>Связаться</h2>
+      <div class="social-icons">
+        <a href="https://facebook.com/shay.kasperski" target="_blank"><i class="ri-facebook-fill"></i></a>
+        <a href="https://wa.me/48514629452" target="_blank"><i class="ri-whatsapp-fill"></i></a>
+        <a href="https://instagram.com/allka.ss" target="_blank"><i class="ri-instagram-fill"></i></a>
+        <a href="https://t.me/alkaspar" target="_blank"><i class="ri-telegram-fill"></i></a>
+      </div>
+    </div>
+
+    <footer>© AlKaspar, 2025</footer>
+  </div>
+
+  <!-- GLightbox -->
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
+  <script>
+    let galleries = {};
+
+    fetch('./galleries/galleries.json')
+      .then(res => res.json())
+      .then(data => {
+        galleries = data;
+        buildMainGallery();
+      })
+      .catch(err => console.error("Ошибка загрузки JSON:", err));
+
+    function buildMainGallery() {
+      const main = document.getElementById("main-gallery");
+      main.innerHTML = "";
+
+      Object.keys(galleries).forEach(key => {
+        const gallery = galleries[key];
+        const cover = gallery.files[0];
+        const path = `./galleries/${gallery.path}${cover}`;
+
+        const card = document.createElement("div");
+        card.classList.add("gallery-card");
+
+        const coverLink = document.createElement("a");
+        coverLink.href = path;
+        coverLink.className = "glightbox";
+        coverLink.dataset.gallery = key;
+        coverLink.dataset.title = `${gallery.title} #1`;
+
+        const img = document.createElement("img");
+        img.src = path;
+        img.alt = gallery.title;
+        img.loading = "lazy";
+        img.classList.add("gallery-cover");
+
+        const title = document.createElement("h2");
+        title.textContent = gallery.title;
+        title.classList.add("gallery-title");
+
+        coverLink.appendChild(img);
+        coverLink.appendChild(title);
+        card.appendChild(coverLink);
+
+        for (let i = 1; i < gallery.files.length; i++) {
+          const p = `./galleries/${gallery.path}${gallery.files[i]}`;
+          const a = document.createElement("a");
+          a.href = p;
+          a.className = "glightbox glightbox-hidden";
+          a.dataset.gallery = key;
+          a.dataset.title = `${gallery.title} #${i + 1}`;
+          card.appendChild(a);
+        }
+
+        main.appendChild(card);
+      });
+
+      GLightbox({
+        selector: ".glightbox",
+        loop: true
+      });
+    }
+  </script>
+</body>
+</html>
