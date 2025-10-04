@@ -40,14 +40,18 @@ body::before {
   object-fit: cover;
   border: 3px solid rgba(255,255,255,0.5);
 }
+
 .author-text h1 {
   margin: 0 0 15px;
-  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+  font-size: clamp(1.6rem, 2vw, 2rem); /* было крупнее, стало чуть меньше */
   font-weight: 600;
 }
+
 .author-text p {
   margin: 0 0 20px;
-  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  font-size: clamp(1rem, 1.4vw, 1.15rem); /* немного увеличен размер */
+  font-weight: 400;
+  color: #e0e0e0; /* слегка светлее для читаемости */
 }
 .social-icons {
   display: flex;
@@ -144,3 +148,4 @@ footer {
     height: auto;
   }
 }
+
