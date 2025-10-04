@@ -1,0 +1,128 @@
+body {
+  margin: 0;
+  font-family: "Lato", "Open Sans", sans-serif;
+  color: #f0f0f0;
+  background: url("./bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Автор */
+.author {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 40px 20px;
+  margin: 40px 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+}
+.author-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+.author-text h1 {
+  margin: 0 0 10px;
+  font-size: clamp(1.4rem, 2vw, 1.9rem);
+}
+.author-text p {
+  margin: 0 0 20px;
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+}
+.social-icons {
+  display: flex;
+  gap: 15px;
+  font-size: 1.5rem;
+}
+.social-icons a {
+  color: #f0f0f0;
+  text-decoration: none;
+}
+.social-icons a:hover {
+  color: #4da3ff;
+}
+
+/* Галерея */
+.main-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  padding: 20px 0 40px;
+}
+.gallery-card {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+.gallery-cover {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+.gallery-title {
+  text-align: center;
+  margin: 8px 0 12px;
+  color: #ddd;
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+}
+
+/* Контакты */
+.contact {
+  text-align: center;
+  margin: 40px 0;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+/* Футер */
+footer {
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 15px;
+  margin-bottom: 20px;
+  color: #bbb;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .author {
+    flex-direction: column;
+    text-align: center;
+  }
+  .main-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* GLightbox подписи */
+.gdesc-inner {
+  padding: 8px 12px 15px 12px !important;
+  background: rgba(255,255,255,0.1);
+  font-size: 0.95rem !important;
+  color: #eee !important;
+}
+.gdesc {
+  max-width: 90% !important;
+  margin: 0 auto !important;
+}
+.glightbox-hidden {
+  display: none;
+}
