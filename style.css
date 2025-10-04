@@ -10,10 +10,9 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   z-index: 0;
 }
-
 .container {
   position: relative;
   z-index: 1;
@@ -29,16 +28,16 @@ body::before {
   gap: 30px;
   padding: 40px 20px;
   margin: 40px 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 .author-photo {
   width: 160px;
   height: 160px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid rgba(255,255,255,0.5);
+  border: 3px solid rgba(255, 255, 255, 0.5);
 }
 .author-text h1 {
   margin: 0 0 15px;
@@ -56,7 +55,7 @@ body::before {
 }
 .social-icons a {
   color: #f0f0f0;
-  transition: color .2s;
+  transition: color 0.2s;
 }
 .social-icons a:hover {
   color: #4da3ff;
@@ -67,36 +66,40 @@ a {
   text-decoration: none;
   color: inherit;
 }
-
 .main-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 30px;
   padding: 20px 0 60px;
 }
-
 .gallery-card {
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
   overflow: hidden;
-  transition: transform .3s, box-shadow .3s;
+  transform: scale(0.97);
   opacity: 0;
-  animation: fadeIn .8s forwards;
+  transition: transform 0.6s ease-in-out, box-shadow 0.3s, opacity 0.6s;
 }
-
+.gallery-card.loaded {
+  opacity: 1;
+  transform: scale(1);
+}
 .gallery-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
 }
-
 .gallery-cover {
   width: 100%;
   height: 200px;
   object-fit: cover;
   display: block;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
 }
-
+.gallery-card.loaded .gallery-cover {
+  opacity: 1;
+}
 .gallery-title {
   margin: 8px 0;
   font-size: clamp(0.95rem, 1.3vw, 1.1rem);
@@ -104,19 +107,14 @@ a {
   color: #ddd;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
 /* ======= Контакты ======= */
 .contact {
   text-align: center;
   margin: 40px 0;
   padding: 20px;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 /* ======= Футер ======= */
@@ -128,22 +126,34 @@ footer {
   color: #bbb;
 }
 
-/* ======= GLightbox: компактные подписи ======= */
+/* ======= GLightbox ======= */
 .gdesc-inner {
-  padding: 8px 12px 15px 12px !important; /* белый отступ сверху и снизу */
-  background: rgba(255,255,255,0.1);      /* лёгкий светлый фон под текстом */
+  padding: 8px 12px 15px 12px !important;
+  background: rgba(255, 255, 255, 0.1);
   font-size: 0.95rem !important;
   line-height: 1.4 !important;
   text-align: center !important;
   color: #eee !important;
 }
-
 .gdesc {
   max-width: 90% !important;
   margin: 0 auto !important;
 }
-
-/* ======= Стили, перенесенные из HTML (для скрытия невидимых ссылок) ======= */
 .glightbox-hidden {
   display: none;
+}
+
+/* ======= Адаптив (телефон) ======= */
+@media (max-width: 768px) {
+  .author {
+    flex-direction: column;
+    text-align: center;
+  }
+  .main-gallery {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .gallery-cover {
+    height: auto;
+  }
 }
