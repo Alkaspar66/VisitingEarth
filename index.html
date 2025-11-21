@@ -16,9 +16,44 @@
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="style.css?v=10">
+
+  <style>
+    /* Added simple text block styling */
+    .top-text-block {
+      text-align: center;
+      font-size: 1.2rem;
+      margin: 20px 0;
+    }
+
+    /* Make gallery cover images fit inside the card */
+    .gallery-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .gallery-cover {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* Adaptive */
+    @media (max-width: 600px) {
+      .gallery-cover {
+        height: auto;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
+
+    <!-- NEW TEXT BLOCK -->
+    <div class="top-text-block">n 2010 I left my home with nothing but camera and notebook. I didn't know then that this was the beginning of a journey that continues to this day. А journey that cost me everything I had, but which gave me something that money can't buy.
+The books I write, the music I play, the pictures I take - all these is my attempt to say "Thanks!" to uncounted amazing persons, places and moments that possible to experience only on beautiful planet called Earth. </div>
+
     <section class="author">
       <img src="./author.jpg" alt="Author" class="author-photo">
       <div class="author-text">
@@ -36,7 +71,6 @@
     <section id="main-gallery" class="main-gallery"></section>
 
     <div class="contact">
-      <h2>Связаться</h2>
       <div class="social-icons">
         <a href="https://facebook.com/shay.kasperski" target="_blank"><i class="ri-facebook-fill"></i></a>
         <a href="https://wa.me/48514629452" target="_blank"><i class="ri-whatsapp-fill"></i></a>
@@ -86,12 +120,13 @@
         img.loading = "lazy";
         img.classList.add("gallery-cover");
 
-        const title = document.createElement("h2");
-        title.textContent = gallery.title;
-        title.classList.add("gallery-title");
+        // TITLE REMOVED — COMMENTED OUT
+        // const title = document.createElement("h2");
+        // title.textContent = gallery.title;
+        // title.classList.add("gallery-title");
 
         coverLink.appendChild(img);
-        coverLink.appendChild(title);
+        // coverLink.appendChild(title);
         card.appendChild(coverLink);
 
         for (let i = 1; i < gallery.files.length; i++) {
@@ -115,5 +150,3 @@
   </script>
 </body>
 </html>
-
-
