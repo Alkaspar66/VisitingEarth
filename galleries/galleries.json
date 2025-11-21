@@ -1,6 +1,6 @@
 {
-  "Life": {
-    "title": "Life",
+  "memories": {
+    "title": "memories",
     "path": "Life/",
     "files": [
       "0.jpg",
@@ -97,4 +97,5 @@
       "93.jpg"
     ]
   }
+
 }
