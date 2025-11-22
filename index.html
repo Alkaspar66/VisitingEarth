@@ -1,81 +1,53 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Visiting Earth</title>
 
-  <!-- favicon -->
   <link rel="icon" type="image/png" href="./favicon.png?v=4">
-
-  <!-- Remix Icons -->
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
-
-  <!-- GLightbox -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
-
-  <!-- Custom Styles -->
   <link rel="stylesheet" href="style.css?v=10">
 
   <style>
-    /* Top text block */
-    .top-text-block {
-      text-align: center;
-      font-size: 1rem;
-      margin: 16px 0;
+    /* basic layout from your original */
+    .top-text-block { text-align:center; font-size:1rem; margin:16px 0; }
+    .social-icons { display:flex; justify-content:center; gap:12px; margin:16px 0; font-size:1.4rem; }
+
+    /* preview */
+    #previewContainer { position:relative; max-width:900px; margin:20px auto; }
+    #previewImage { width:100%; border-radius:12px; display:block; background:#222; min-height:120px; object-fit:cover; }
+    #previewPlayBtn {
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:90px; height:90px; border-radius:50%;
+      background:rgba(0,0,0,0.45);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; transition:0.15s; color:#fff; font-size:44px;
+    }
+    #previewPlayBtn[disabled] { opacity:0.45; cursor:not-allowed; }
+
+    /* fullscreen slideshow */
+    #slideshowFullscreen {
+      position:fixed; inset:0; background:black; display:none; z-index:99999; overflow:hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .slide {
+      position:absolute; inset:0; background-size:contain; background-position:center; background-repeat:no-repeat;
+      opacity:0; transition:opacity 1s ease;
+    }
+    .slide.show { opacity:1; }
+
+    /* pause play icon shown when paused */
+    #pausePlayIcon {
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:120px; height:120px; border-radius:50%;
+      display:none; align-items:center; justify-content:center;
+      background:rgba(0,0,0,0.5); color:#fff; font-size:48px; pointer-events:none;
     }
 
-    /* Social icons centered */
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin: 16px 0;
-    }
-
-    /* Play Slideshow Button */
-    .play-slideshow-btn {
-      display: block;
-      margin: 16px auto;
-      padding: 10px 20px;
-      font-size: 1rem;
-      background-color: #1a73e8;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    /* Gallery cards */
-    .gallery-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 10px;
-      margin-bottom: 16px;
-    }
-
-    /* First gallery image adaptive */
-    .gallery-card:first-child .gallery-cover {
-      max-width: 80vw;
-      max-height: 60vh;
-      margin: 0 auto;
-      display: block;
-      object-fit: contain;
-    }
-
-    /* Other gallery images */
-    .gallery-cover {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-    }
-
-    /* Adaptive for small screens */
-    @media (max-width: 600px) {
-      .gallery-cover {
-        height: auto;
-      }
+    @media (max-width:600px) {
+      #previewPlayBtn { width:60px; height:60px; font-size:32px; }
+      #pausePlayIcon { width:80px; height:80px; font-size:36px; }
     }
   </style>
 </head>
@@ -98,16 +70,19 @@
 
     <section class="author">
       <div class="author-text">
-        <div class="top-text-block">In 2010 I left my home with nothing but camera and notebook. I didn't know then that this was the beginning of a journey that continues to this day. А journey that cost me everything I had, but which gave me something that money can't buy. The books I write, the music I play, the pictures I take - all these is my attempt to say "Thanks!" to uncounted amazing persons, places and moments that possible to experience only on beautiful planet called Earth.</div>
+        <div class="top-text-block">
+          In 2010 I left my home with nothing but camera and notebook. I didn't know then that this was the beginning of a journey that continues to this day. А journey that cost me everything I had, but which gave me something that money can't buy. The books I write, the music I play, the pictures I take - all these is my attempt to say "Thanks!" to uncounted amazing persons, places and moments that possible to experience only on beautiful planet called Earth.
+        </div>
       </div>
     </section>
 
-    <!-- Play Slideshow Button -->
-    <div class="play-slideshow-container">
-      <button class="play-slideshow-btn" id="play-slideshow">Play Slideshow</button>
+    <!-- PREVIEW IMAGE & PLAY -->
+    <div id="previewContainer" aria-hidden="false">
+      <img id="previewImage" src="./galleries/Life/0.jpg" alt="Preview image">
+      <button id="previewPlayBtn" aria-label="Play slideshow" disabled>
+        <i class="ri-play-fill" style="font-size:46px"></i>
+      </button>
     </div>
-
-    <section id="main-gallery" class="main-gallery"></section>
 
     <div class="contact">
       <div class="social-icons">
@@ -121,84 +96,195 @@
     <footer>© AlKaspar, 2025</footer>
   </div>
 
-  <!-- GLightbox -->
-  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+  <!-- FULLSCREEN SLIDESHOW -->
+  <div id="slideshowFullscreen" role="dialog" aria-hidden="true">
+    <!-- slides are injected here -->
+    <div id="pausePlayIcon" class="ri-play-fill" aria-hidden="true"></div>
+  </div>
 
-  <script>
-    let galleries = {};
+<script>
+/* ----------------- CONFIG ----------------- */
+const JSON_PATH = "./galleries/galleries.json";
+const JSON_KEY = "memories";      // the key in your JSON that contains the gallery
+const slideShowDelay = 3000;      // time each slide is shown (ms)
+const fadeMs = 1000;              // crossfade duration (ms)
 
-    fetch('./galleries/galleries.json')
-      .then(res => res.json())
-      .then(data => {
-        galleries = data;
-        buildMainGallery();
-      })
-      .catch(err => console.error("Ошибка загрузки JSON:", err));
+/* ----------------- STATE ----------------- */
+let files = [];
+let folder = "";
+let slides = [];       // DOM slide elements
+let current = 0;
+let playing = false;
+let timer = null;
 
-    function buildMainGallery() {
-      const main = document.getElementById("main-gallery");
-      main.innerHTML = "";
+/* DOM */
+const previewImage = document.getElementById("previewImage");
+const previewPlayBtn = document.getElementById("previewPlayBtn");
+const slideshow = document.getElementById("slideshowFullscreen");
+const pausePlayIcon = () => document.getElementById("pausePlayIcon");
 
-      Object.keys(galleries).forEach(key => {
-        const gallery = galleries[key];
-        const cover = gallery.files[0];
-        const path = `./galleries/${gallery.path}${cover}`;
+/* ----------------- HELPERS ----------------- */
+function enablePreviewPlay() {
+  previewPlayBtn.disabled = false;
+  previewPlayBtn.style.opacity = 1;
+}
+function disablePreviewPlay() {
+  previewPlayBtn.disabled = true;
+  previewPlayBtn.style.opacity = 0.45;
+}
 
-        const card = document.createElement("div");
-        card.classList.add("gallery-card");
+/* ----------------- LOAD JSON ----------------- */
+fetch(JSON_PATH)
+  .then(r => {
+    if (!r.ok) throw new Error("Не удалось загрузить " + JSON_PATH);
+    return r.json();
+  })
+  .then(json => {
+    if (!json || !json[JSON_KEY]) throw new Error("Неверный формат JSON");
+    const gal = json[JSON_KEY];
+    folder = "./galleries/" + (gal.path || "");
+    files = Array.isArray(gal.files) ? gal.files.slice() : [];
 
-        const coverLink = document.createElement("a");
-        coverLink.href = path;
-        coverLink.className = "glightbox";
-        coverLink.dataset.gallery = key;
-        coverLink.dataset.title = `${gallery.title} #1`;
-
-        const img = document.createElement("img");
-        img.src = path;
-        img.alt = gallery.title;
-        img.loading = "lazy";
-        img.classList.add("gallery-cover");
-
-        // Title removed
-        // const title = document.createElement("h2");
-        // title.textContent = gallery.title;
-        // title.classList.add("gallery-title");
-
-        coverLink.appendChild(img);
-        // coverLink.appendChild(title);
-        card.appendChild(coverLink);
-
-        for (let i = 1; i < gallery.files.length; i++) {
-          const p = `./galleries/${gallery.path}${gallery.files[i]}`;
-          const a = document.createElement("a");
-          a.href = p;
-          a.className = "glightbox glightbox-hidden";
-          a.dataset.gallery = key;
-          a.dataset.title = `${gallery.title} #${i + 1}`;
-          card.appendChild(a);
-        }
-
-        main.appendChild(card);
-      });
-
-      GLightbox({
-        selector: ".glightbox",
-        loop: true
-      });
+    if (files.length > 0) {
+      // set preview image to first file from JSON
+      previewImage.src = folder + files[0];
+      enablePreviewPlay();
+    } else {
+      // fallback if empty
+      previewImage.src = "./galleries/Life/0.jpg";
+      disablePreviewPlay();
     }
+  })
+  .catch(err => {
+    console.error(err);
+    // still allow play (optional) but keep disabled to avoid errors
+    previewImage.src = "./galleries/Life/0.jpg";
+    disablePreviewPlay();
+  });
 
-    // Play slideshow button
-    const playBtn = document.getElementById('play-slideshow');
-    playBtn.addEventListener('click', () => {
-      const firstGalleryLink = document.querySelector('.glightbox');
-      if(firstGalleryLink) {
-        const lightbox = GLightbox({
-          selector: '.glightbox',
-          loop: true
-        });
-        lightbox.open();
-      }
-    });
-  </script>
+
+/* ----------------- SLIDESHOW BUILD / TEARDOWN ----------------- */
+function buildSlides() {
+  // clear any existing slides (if reopening)
+  slideshow.innerHTML = '<div id="pausePlayIcon" class="ri-play-fill" aria-hidden="true"></div>';
+  slides = [];
+
+  // create slide divs from files[]
+  files.forEach((fname, idx) => {
+    const d = document.createElement("div");
+    d.className = "slide";
+    d.style.transition = `opacity ${fadeMs}ms ease`;
+    d.style.backgroundImage = `url('${folder}${fname}')`;
+    if (idx === 0) d.classList.add("show");
+    slideshow.appendChild(d);
+    slides.push(d);
+  });
+}
+
+function teardownSlides() {
+  clearInterval(timer);
+  timer = null;
+  slides = [];
+  current = 0;
+  // restore only pause icon node
+  slideshow.innerHTML = '<div id="pausePlayIcon" class="ri-play-fill" aria-hidden="true"></div>';
+}
+
+/* ----------------- PLAY / PAUSE / NEXT ----------------- */
+function startSlideshow() {
+  if (!files.length) return;
+  buildSlides();
+  playing = true;
+  hidePauseIcon();
+  // ensure first shown
+  slides.forEach(s => s.classList.remove("show"));
+  slides[0].classList.add("show");
+  current = 0;
+  // start timer (delay = show time)
+  timer = setInterval(() => {
+    nextSlide();
+  }, slideShowDelay);
+  slideshow.style.display = "block";
+  slideshow.setAttribute("aria-hidden", "false");
+}
+
+function stopSlideshow() {
+  playing = false;
+  if (timer) { clearInterval(timer); timer = null; }
+  showPauseIcon();
+}
+
+function nextSlide() {
+  if (!slides.length) return;
+  slides[current].classList.remove("show");
+  current = (current + 1) % slides.length;
+  slides[current].classList.add("show");
+}
+
+function showPauseIcon() {
+  const ic = pausePlayIcon();
+  if (ic) ic.style.display = "flex";
+}
+function hidePauseIcon() {
+  const ic = pausePlayIcon();
+  if (ic) ic.style.display = "none";
+}
+
+/* ----------------- OPEN / CLOSE ----------------- */
+function openSlideshow() {
+  if (!files.length) return;
+  startSlideshow();
+}
+
+function closeSlideshow() {
+  teardownSlides();
+  slideshow.style.display = "none";
+  slideshow.setAttribute("aria-hidden", "true");
+}
+
+/* ----------------- CLICK / DOUBLECLICK HANDLING ----------------- */
+/*
+  To avoid single-click firing twice on double-click,
+  we use a short timeout to distinguish them.
+*/
+let clickTimeout = null;
+slideshow.addEventListener("click", (e) => {
+  // don't toggle if click happened on pause icon (pointer-events none), but keep consistent
+  if (clickTimeout) return;
+  clickTimeout = setTimeout(() => {
+    clickTimeout = null;
+    // toggle pause/resume
+    if (playing) {
+      stopSlideshow();
+    } else {
+      // resume: restart timer but keep current slide visible
+      playing = true;
+      hidePauseIcon();
+      if (!timer) timer = setInterval(nextSlide, slideShowDelay);
+    }
+  }, 220); // 220ms threshold
+});
+
+slideshow.addEventListener("dblclick", (e) => {
+  if (clickTimeout) {
+    clearTimeout(clickTimeout);
+    clickTimeout = null;
+  }
+  closeSlideshow();
+});
+
+/* preview play button */
+previewPlayBtn.addEventListener("click", () => {
+  if (previewPlayBtn.disabled) return;
+  openSlideshow();
+});
+
+/* accessibility: allow Esc to close when open */
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeSlideshow();
+  }
+});
+</script>
 </body>
 </html>
