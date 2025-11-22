@@ -1,90 +1,65 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Visiting Earth</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visiting Earth</title>
 
-  <link rel="icon" type="image/png" href="./favicon.png?v=4">
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=10">
+<link rel="icon" type="image/png" href="./favicon.png?v=4">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=10">
 
-  <style>
-    /* basic layout from your original */
-    .top-text-block { text-align:center; font-size:1rem; margin:16px 0; }
-    .social-icons { display:flex; justify-content:center; gap:12px; margin:16px 0; font-size:1.4rem; }
+<style>
+body { margin:0; font-family:sans-serif; background:#f5f5f5; color:#222; }
 
-    /* preview */
-    #previewContainer { position:relative; max-width:900px; margin:20px auto; }
-    #previewImage { width:100%; border-radius:12px; display:block; background:#222; min-height:120px; object-fit:cover; }
-    #previewPlayBtn {
-      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-      width:90px; height:90px; border-radius:50%;
-      background:rgba(0,0,0,0.45);
-      display:flex; align-items:center; justify-content:center;
-      cursor:pointer; transition:0.15s; color:#fff; font-size:44px;
-    }
-    #previewPlayBtn[disabled] { opacity:0.45; cursor:not-allowed; }
+.container { max-width:960px; margin:0 auto; padding:0 16px; }
 
-    /* fullscreen slideshow */
-    #slideshowFullscreen {
-      position:fixed; inset:0; background:black; display:none; z-index:99999; overflow:hidden;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .slide {
-      position:absolute; inset:0; background-size:contain; background-position:center; background-repeat:no-repeat;
-      opacity:0; transition:opacity 1s ease;
-    }
-    .slide.show { opacity:1; }
+.author { display:flex; align-items:center; flex-wrap:wrap; margin-top:20px; }
+.author-photo { width:120px; border-radius:50%; margin-right:16px; }
+.author-text { flex:1; min-width:200px; }
 
-    /* pause play icon shown when paused */
-    #pausePlayIcon {
-      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-      width:120px; height:120px; border-radius:50%;
-      display:none; align-items:center; justify-content:center;
-      background:rgba(0,0,0,0.5); color:#fff; font-size:48px; pointer-events:none;
-    }
+.top-text-block { text-align:center; font-size:1rem; margin:16px 0; }
 
-    @media (max-width:600px) {
-      #previewPlayBtn { width:60px; height:60px; font-size:32px; }
-      #pausePlayIcon { width:80px; height:80px; font-size:36px; }
-    }
-  </style>
+.social-icons { display:flex; justify-content:center; gap:12px; margin:16px 0; font-size:1.4rem; }
+
+footer { text-align:center; margin:20px 0; }
+
+#previewContainer { position:relative; max-width:900px; margin:20px auto; }
+#previewImage { width:100%; border-radius:12px; display:block; object-fit:cover; min-height:120px; }
+#preview-play {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-size:64px; color:white; opacity:0.7; cursor:pointer;
+  display:flex; justify-content:center; align-items:center;
+}
+
+#slideshow-overlay {
+  position:fixed; inset:0; background:black; display:none; z-index:9999;
+  justify-content:center; align-items:center; overflow:hidden;
+}
+
+#slideshow-image {
+  max-width:100%; max-height:100%; object-fit:contain; opacity:1; transition:opacity 1s ease;
+}
+
+#big-play-btn {
+  position:absolute; font-size:72px; color:white; opacity:0.7; cursor:pointer;
+  display:flex; justify-content:center; align-items:center;
+}
+@media(max-width:600px){
+  #preview-play { font-size:48px; }
+  #big-play-btn { font-size:48px; }
+}
+</style>
 </head>
 <body>
-  <div class="container">
 
-    <section class="author">
-      <img src="./author.jpg" alt="Author" class="author-photo">
-      <div class="author-text">
-        <h1>Alexander Shai Kasperski</h1>
-        <p>Memories from visiting planet Earth</p>
-        <div class="social-icons">
-          <a href="https://facebook.com/shay.kasperski" target="_blank"><i class="ri-facebook-fill"></i></a>
-          <a href="https://wa.me/48514629452" target="_blank"><i class="ri-whatsapp-fill"></i></a>
-          <a href="https://instagram.com/allka.ss" target="_blank"><i class="ri-instagram-fill"></i></a>
-          <a href="https://t.me/alkaspar" target="_blank"><i class="ri-telegram-fill"></i></a>
-        </div>
-      </div>
-    </section>
+<div class="container">
 
-    <section class="author">
-      <div class="author-text">
-        <div class="top-text-block">
-          In 2010 I left my home with nothing but camera and notebook. I didn't know then that this was the beginning of a journey that continues to this day. А journey that cost me everything I had, but which gave me something that money can't buy. The books I write, the music I play, the pictures I take - all these is my attempt to say "Thanks!" to uncounted amazing persons, places and moments that possible to experience only on beautiful planet called Earth.
-        </div>
-      </div>
-    </section>
-
-    <!-- PREVIEW IMAGE & PLAY -->
-    <div id="previewContainer" aria-hidden="false">
-      <img id="previewImage" src="./galleries/Life/0.jpg" alt="Preview image">
-      <button id="previewPlayBtn" aria-label="Play slideshow" disabled>
-        <i class="ri-play-fill" style="font-size:46px"></i>
-      </button>
-    </div>
-
-    <div class="contact">
+  <section class="author">
+    <img src="./author.jpg" alt="Author" class="author-photo">
+    <div class="author-text">
+      <h1>Alexander Shai Kasperski</h1>
+      <p>Memories from visiting planet Earth</p>
       <div class="social-icons">
         <a href="https://facebook.com/shay.kasperski" target="_blank"><i class="ri-facebook-fill"></i></a>
         <a href="https://wa.me/48514629452" target="_blank"><i class="ri-whatsapp-fill"></i></a>
@@ -92,199 +67,105 @@
         <a href="https://t.me/alkaspar" target="_blank"><i class="ri-telegram-fill"></i></a>
       </div>
     </div>
+  </section>
 
-    <footer>© AlKaspar, 2025</footer>
+  <section class="author">
+    <div class="author-text">
+      <div class="top-text-block">
+        In 2010 I left my home with nothing but camera and notebook. I didn't know then that this was the beginning of a journey that continues to this day. А journey that cost me everything I had, but which gave me something that money can't buy. The books I write, the music I play, the pictures I take - all these is my attempt to say "Thanks!" to uncounted amazing persons, places and moments that possible to experience only on beautiful planet called Earth.
+      </div>
+    </div>
+  </section>
+
+  <!-- Preview Image -->
+  <div id="previewContainer">
+    <img id="previewImage" src="./galleries/Life/0.jpg" alt="Preview">
+    <div id="preview-play"><i class="ri-play-fill"></i></div>
   </div>
 
-  <!-- FULLSCREEN SLIDESHOW -->
-  <div id="slideshowFullscreen" role="dialog" aria-hidden="true">
-    <!-- slides are injected here -->
-    <div id="pausePlayIcon" class="ri-play-fill" aria-hidden="true"></div>
+  <div class="contact">
+    <div class="social-icons">
+      <a href="https://facebook.com/shay.kasperski" target="_blank"><i class="ri-facebook-fill"></i></a>
+      <a href="https://wa.me/48514629452" target="_blank"><i class="ri-whatsapp-fill"></i></a>
+      <a href="https://instagram.com/allka.ss" target="_blank"><i class="ri-instagram-fill"></i></a>
+      <a href="https://t.me/alkaspar" target="_blank"><i class="ri-telegram-fill"></i></a>
+    </div>
   </div>
+
+  <footer>© AlKaspar, 2025</footer>
+</div>
+
+<!-- Fullscreen Slideshow -->
+<div id="slideshow-overlay">
+  <img id="slideshow-image" src="" alt="Slideshow">
+  <div id="big-play-btn"><i class="ri-play-fill"></i></div>
+</div>
 
 <script>
-/* ----------------- CONFIG ----------------- */
-const JSON_PATH = "./galleries/galleries.json";
-const JSON_KEY = "memories";      // the key in your JSON that contains the gallery
-const slideShowDelay = 3000;      // time each slide is shown (ms)
-const fadeMs = 1000;              // crossfade duration (ms)
-
-/* ----------------- STATE ----------------- */
 let files = [];
 let folder = "";
-let slides = [];       // DOM slide elements
 let current = 0;
 let playing = false;
+let paused = false;
 let timer = null;
 
-/* DOM */
 const previewImage = document.getElementById("previewImage");
-const previewPlayBtn = document.getElementById("previewPlayBtn");
-const slideshow = document.getElementById("slideshowFullscreen");
-const pausePlayIcon = () => document.getElementById("pausePlayIcon");
+const previewPlay = document.getElementById("preview-play");
+const overlay = document.getElementById("slideshow-overlay");
+const slide = document.getElementById("slideshow-image");
+const bigPlay = document.getElementById("big-play-btn");
 
-/* ----------------- HELPERS ----------------- */
-function enablePreviewPlay() {
-  previewPlayBtn.disabled = false;
-  previewPlayBtn.style.opacity = 1;
-}
-function disablePreviewPlay() {
-  previewPlayBtn.disabled = true;
-  previewPlayBtn.style.opacity = 0.45;
-}
-
-/* ----------------- LOAD JSON ----------------- */
-fetch(JSON_PATH)
-  .then(r => {
-    if (!r.ok) throw new Error("Не удалось загрузить " + JSON_PATH);
-    return r.json();
+// Load JSON
+fetch("./galleries/galleries.json")
+  .then(r=>r.json())
+  .then(data=>{
+    const gal = data.memories;
+    folder = "./galleries/" + gal.path;
+    files = gal.files.map(f=>folder+f);
+    if(files.length>0) previewImage.src = files[0];
   })
-  .then(json => {
-    if (!json || !json[JSON_KEY]) throw new Error("Неверный формат JSON");
-    const gal = json[JSON_KEY];
-    folder = "./galleries/" + (gal.path || "");
-    files = Array.isArray(gal.files) ? gal.files.slice() : [];
+  .catch(err=>{console.error(err); previewImage.src="./galleries/Life/0.jpg";});
 
-    if (files.length > 0) {
-      // set preview image to first file from JSON
-      previewImage.src = folder + files[0];
-      enablePreviewPlay();
-    } else {
-      // fallback if empty
-      previewImage.src = "./galleries/Life/0.jpg";
-      disablePreviewPlay();
-    }
-  })
-  .catch(err => {
-    console.error(err);
-    // still allow play (optional) but keep disabled to avoid errors
-    previewImage.src = "./galleries/Life/0.jpg";
-    disablePreviewPlay();
-  });
-
-
-/* ----------------- SLIDESHOW BUILD / TEARDOWN ----------------- */
-function buildSlides() {
-  // clear any existing slides (if reopening)
-  slideshow.innerHTML = '<div id="pausePlayIcon" class="ri-play-fill" aria-hidden="true"></div>';
-  slides = [];
-
-  // create slide divs from files[]
-  files.forEach((fname, idx) => {
-    const d = document.createElement("div");
-    d.className = "slide";
-    d.style.transition = `opacity ${fadeMs}ms ease`;
-    d.style.backgroundImage = `url('${folder}${fname}')`;
-    if (idx === 0) d.classList.add("show");
-    slideshow.appendChild(d);
-    slides.push(d);
-  });
+// Start slideshow
+function startShow(){
+  if(!files.length) return;
+  playing = true; paused=false; overlay.style.display="flex"; bigPlay.style.display="none";
+  current=0; slide.src=files[current];
+  nextSlide();
 }
 
-function teardownSlides() {
-  clearInterval(timer);
-  timer = null;
-  slides = [];
-  current = 0;
-  // restore only pause icon node
-  slideshow.innerHTML = '<div id="pausePlayIcon" class="ri-play-fill" aria-hidden="true"></div>';
+function nextSlide(){
+  timer = setTimeout(()=>{
+    if(!playing||paused) return;
+    slide.style.opacity=0;
+    current = (current+1)%files.length;
+    setTimeout(()=>{ slide.src=files[current]; slide.style.opacity=1; nextSlide(); },1000);
+  },3000);
 }
 
-/* ----------------- PLAY / PAUSE / NEXT ----------------- */
-function startSlideshow() {
-  if (!files.length) return;
-  buildSlides();
-  playing = true;
-  hidePauseIcon();
-  // ensure first shown
-  slides.forEach(s => s.classList.remove("show"));
-  slides[0].classList.add("show");
-  current = 0;
-  // start timer (delay = show time)
-  timer = setInterval(() => {
+// Click = pause/resume
+overlay.addEventListener("click",()=>{
+  if(!playing) return;
+  if(!paused){
+    paused=true;
+    clearTimeout(timer);
+    bigPlay.style.display="flex";
+  } else {
+    paused=false;
+    bigPlay.style.display="none";
     nextSlide();
-  }, slideShowDelay);
-  slideshow.style.display = "block";
-  slideshow.setAttribute("aria-hidden", "false");
-}
-
-function stopSlideshow() {
-  playing = false;
-  if (timer) { clearInterval(timer); timer = null; }
-  showPauseIcon();
-}
-
-function nextSlide() {
-  if (!slides.length) return;
-  slides[current].classList.remove("show");
-  current = (current + 1) % slides.length;
-  slides[current].classList.add("show");
-}
-
-function showPauseIcon() {
-  const ic = pausePlayIcon();
-  if (ic) ic.style.display = "flex";
-}
-function hidePauseIcon() {
-  const ic = pausePlayIcon();
-  if (ic) ic.style.display = "none";
-}
-
-/* ----------------- OPEN / CLOSE ----------------- */
-function openSlideshow() {
-  if (!files.length) return;
-  startSlideshow();
-}
-
-function closeSlideshow() {
-  teardownSlides();
-  slideshow.style.display = "none";
-  slideshow.setAttribute("aria-hidden", "true");
-}
-
-/* ----------------- CLICK / DOUBLECLICK HANDLING ----------------- */
-/*
-  To avoid single-click firing twice on double-click,
-  we use a short timeout to distinguish them.
-*/
-let clickTimeout = null;
-slideshow.addEventListener("click", (e) => {
-  // don't toggle if click happened on pause icon (pointer-events none), but keep consistent
-  if (clickTimeout) return;
-  clickTimeout = setTimeout(() => {
-    clickTimeout = null;
-    // toggle pause/resume
-    if (playing) {
-      stopSlideshow();
-    } else {
-      // resume: restart timer but keep current slide visible
-      playing = true;
-      hidePauseIcon();
-      if (!timer) timer = setInterval(nextSlide, slideShowDelay);
-    }
-  }, 220); // 220ms threshold
-});
-
-slideshow.addEventListener("dblclick", (e) => {
-  if (clickTimeout) {
-    clearTimeout(clickTimeout);
-    clickTimeout = null;
-  }
-  closeSlideshow();
-});
-
-/* preview play button */
-previewPlayBtn.addEventListener("click", () => {
-  if (previewPlayBtn.disabled) return;
-  openSlideshow();
-});
-
-/* accessibility: allow Esc to close when open */
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    closeSlideshow();
   }
 });
+
+// Doubleclick = close
+overlay.addEventListener("dblclick",()=>{
+  playing=false; paused=false; clearTimeout(timer);
+  overlay.style.display="none"; bigPlay.style.display="flex";
+});
+
+// Preview play button
+previewPlay.addEventListener("click",startShow);
 </script>
+
 </body>
 </html>
