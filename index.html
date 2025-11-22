@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="style.css?v=10">
 
 <style>
-  /* basic layout */
   .top-text-block { text-align:center; font-size:1rem; margin:16px 0; }
   .social-icons { display:flex; justify-content:center; gap:12px; margin:16px 0; font-size:1.4rem; }
 
@@ -35,7 +34,6 @@
   }
   .slide.show { opacity:1; }
 
-  /* pause play icon shown when paused */
   #pausePlayIcon {
     position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
     width:120px; height:120px; display:none; align-items:center; justify-content:center;
@@ -153,19 +151,35 @@ function startSlideshow(){
   buildSlides();
   playing=true;
   hidePauseIcon();
-  // show first slide immediately
   slides.forEach(s=>s.classList.remove("show"));
   slides[0].classList.add("show");
   current=0;
+
+  // таймер на следующий слайд
   timer = setInterval(nextSlide, slideShowDelay);
+
   slideshow.style.display="block";
   slideshow.setAttribute("aria-hidden","false");
 }
 
+function nextSlide(){
+  if(!slides.length) return;
+  slides[current].classList.remove("show");
+  current++;
+
+  if(current >= slides.length){
+    // конец: закрываем плеер
+    closeSlideshow();
+    return;
+  }
+
+  slides[current].classList.add("show");
+}
+
 function stopSlideshow(){ playing=false; if(timer){clearInterval(timer); timer=null;} showPauseIcon(); }
-function nextSlide(){ if(!slides.length) return; slides[current].classList.remove("show"); current=(current+1)%slides.length; slides[current].classList.add("show"); }
 function showPauseIcon(){ const ic=pausePlayIcon(); if(ic) ic.style.display="flex"; }
 function hidePauseIcon(){ const ic=pausePlayIcon(); if(ic) ic.style.display="none"; }
+
 function openSlideshow(){ if(!files.length) return; startSlideshow(); }
 function closeSlideshow(){ teardownSlides(); slideshow.style.display="none"; slideshow.setAttribute("aria-hidden","true"); }
 
